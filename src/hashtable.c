@@ -76,10 +76,12 @@ void *_hashtable_iter(hashtable_iter_t *i, hashtable_t *t)
 
 void *_hashtable_next(hashtable_iter_t *i)
 {
+	const hashtable_t *t = NULL;
+	void *e = NULL;
     assert(i->htable != NULL);
     assert(i->index <= i->htable->size);
-    const hashtable_t *t = i->htable;
-    void *e;
+
+    t = i->htable;
 
     while (i->index < t->size) {
         if ((e = t->etable[i->index++]))

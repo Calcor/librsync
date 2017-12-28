@@ -193,8 +193,8 @@ static inline unsigned mix32(unsigned int h)
    reserving zero for empty buckets, and iterating with index i and entry
    hash h, terminating at an empty bucket. */
 #define _for_probe(t, k, hk, i, h) \
-    const unsigned mask = t->size - 1;\
-    unsigned hk = KEY_HASH((KEY_T *)k), i, s, h;\
+    mask = t->size - 1;\
+    hk = KEY_HASH((KEY_T *)k), i, s, h;\
     hk = hk ? hk : -1;\
     for (i = mix32(hk) & mask, s = 0; (h = t->ktable[i]); i = (i + ++s) & mask)
 
@@ -259,6 +259,8 @@ static inline void _FUNC(_stats_init)(hashtable_t *t)
  * \return The added entry, or NULL if the table is full. */
 static inline ENTRY_T *_FUNC(_add)(hashtable_t *t, ENTRY_T *e)
 {
+	unsigned mask;
+	unsigned he, i, h, s;
     assert(e != NULL);
     if (t->count + 1 == t->size)
         return NULL;
@@ -279,8 +281,11 @@ static inline ENTRY_T *_FUNC(_add)(hashtable_t *t, ENTRY_T *e)
  * \return The first found entry, or NULL if nothing was found. */
 static inline ENTRY_T *_FUNC(_find)(hashtable_t *t, MATCH_T *m)
 {
+	unsigned mask;
+	unsigned hm, i, he, s;
+	ENTRY_T *e;
     assert(m != NULL);
-    ENTRY_T *e;
+    
 
     _stats_inc(t->find_count);
     _for_probe(t, m, hm, i, he) {

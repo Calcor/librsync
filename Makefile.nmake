@@ -1,0 +1,47 @@
+
+
+CFLAGS = /Ox /I./src/ /I./src/blake2 /I./src/win /DWin32 /D_Windows /D "inline=__inline" /D "snprintf=_snprintf" 
+
+CFLAGS = $(CFLAGS) /Ox /W3 /nolog /MT /c /TC 
+
+LIB_OBJS =	./src/blake2/blake2b-ref.obj \
+			./src/prototab.obj \
+			./src/base64.obj \
+			./src/buf.obj \
+			./src/checksum.obj \
+			./src/command.obj \
+			./src/delta.obj \
+			./src/emit.obj \
+			./src/fileutil.obj \
+			./src/hashtable.obj \
+			./src/hex.obj \
+			./src/job.obj \
+			./src/mdfour.obj \
+			./src/mksum.obj \
+			./src/msg.obj \
+			./src/netint.obj \
+			./src/patch.obj \
+			./src/readsums.obj \
+			./src/rollsum.obj \
+			./src/scoop.obj \
+			./src/stats.obj \
+			./src/stream.obj \
+			./src/sumset.obj \
+			./src/trace.obj \
+			./src/tube.obj \
+			./src/util.obj \
+			./src/version.obj \
+			./src/whole.obj \
+
+RDIFF_OBJS = ./src/rdiff.obj \
+			 ./src/isprefix.obj
+
+all: librsync.lib
+
+librsync.lib: $(LIB_OBJS)
+	lib *.obj /out:librsync.lib
+	del *.obj
+
+clean: 
+	del *.lib
+	del *.obj
