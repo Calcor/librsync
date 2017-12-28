@@ -1,12 +1,12 @@
 Forked from https://github.com/librsync/librsync
 
-##Build librsync on Windows
+## Build librsync on Windows
 1. Clone this repository.
 2. Open Visual Studio command line.
 3. cd to librsync
 4. Execute 'nmake /F Makefile.nmake' to build librsync.lib
 
-##How use librsync.lib
+## How use librsync.lib
 1. Add 'src' and 'src/win' to your include paths and include librsync.h
 2. Compile your program and link it with librsync.lib
 
